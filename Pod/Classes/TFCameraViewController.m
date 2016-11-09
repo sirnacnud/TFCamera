@@ -64,8 +64,12 @@
 #pragma mark - Initializers
 - (instancetype) initWithInterface
 {
-    TFCameraViewController *cameraViewController = [[TFCameraViewController alloc] initWithNibName:@"CameraOverlay" bundle:[self podBundle]];
-    return cameraViewController;
+    return [super initWithNibName:@"CameraOverlay" bundle:[TFCameraViewController podBundle]];
+}
+
++ (instancetype) withDefaultInterface
+{
+    return [[TFCameraViewController alloc] initWithNibName:@"CameraOverlay" bundle:[self podBundle]];
 }
 
 #pragma mark - View Lifecycle
@@ -155,13 +159,13 @@
     [self setupCaptureSession];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateFromInterfaceOrientation:) name:UIDeviceOrientationDidChangeNotification object:nil];
     
-    NSString *onImagePath = [[self podBundle] pathForResource:@"camera-flash" ofType:@"png"];
+    NSString *onImagePath = [[TFCameraViewController podBundle] pathForResource:@"camera-flash" ofType:@"png"];
     self.flashOnImage = [UIImage imageWithContentsOfFile:onImagePath];
     
-    NSString *offImagePath = [[self podBundle] pathForResource:@"camera-flash-on" ofType:@"png"];
+    NSString *offImagePath = [[TFCameraViewController podBundle] pathForResource:@"camera-flash-on" ofType:@"png"];
     self.flashOffImage = [UIImage imageWithContentsOfFile:offImagePath];
     
-    NSString *swapImagePath = [[self podBundle] pathForResource:@"camera-swap" ofType:@"png"];
+    NSString *swapImagePath = [[TFCameraViewController podBundle] pathForResource:@"camera-swap" ofType:@"png"];
     self.swapCameraImage = [UIImage imageWithContentsOfFile:swapImagePath];
     
     [self setupFlashButton];
@@ -577,14 +581,14 @@
             [device lockForConfiguration:nil];
             
             if (device.flashMode == AVCaptureFlashModeOff) {
-                NSString *imagePath = [[self podBundle] pathForResource:@"camera-flash-on" ofType:@"png"];
+                NSString *imagePath = [[TFCameraViewController podBundle] pathForResource:@"camera-flash-on" ofType:@"png"];
                 UIImage *flashButtonImage = [UIImage imageWithContentsOfFile:imagePath];
                 flashButtonImage = [flashButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                 self.flashButton.tintColor = self.appColor;
                 [self.flashButton setImage:flashButtonImage forState:UIControlStateNormal];
                 [device setFlashMode:AVCaptureFlashModeOn];
             } else {
-                NSString *imagePath = [[self podBundle] pathForResource:@"camera-flash" ofType:@"png"];
+                NSString *imagePath = [[TFCameraViewController podBundle] pathForResource:@"camera-flash" ofType:@"png"];
                 UIImage *flashButtonImage = [UIImage imageWithContentsOfFile:imagePath];
                 flashButtonImage = [flashButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                 self.flashButton.tintColor = self.appColor;
@@ -728,9 +732,9 @@
     [self setupSwapCameraButton];
 }
 
-- (NSBundle *) podBundle
++ (NSBundle *) podBundle
 {
-    NSBundle *podBundle = [NSBundle bundleForClass:self.classForCoder];
+    NSBundle *podBundle = [NSBundle bundleForClass:self.class];
     NSURL *bundleURL = [podBundle URLForResource:@"TFCamera" withExtension:@"bundle"];
     
     return [NSBundle bundleWithURL:bundleURL];

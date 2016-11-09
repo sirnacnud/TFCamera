@@ -10,7 +10,7 @@
 /*!
  Call the following to init the Camera VC for display
  
- TFCameraViewController *cameraVC = [[TFCameraViewController alloc] initWithNibName:@"CameraOverlay" bundle:nil];
+ TFCameraViewController *cameraVC = [TFCameraViewController withDefaultInterface];
  */
 
 
@@ -51,8 +51,15 @@
 
 /*!
  This is the default instantion method. Incudes regular and selfie flash, video recording, camera swapping, tap to focus, and doubletap to switch cameras.
+ 
+ This is now deprecated, use [TFCameraViewController withDefaultInterface].
  */
-- (instancetype) initWithInterface;
+- (instancetype) initWithInterface __attribute__((deprecated("Replaced by +withDefaultInterface")));
+
+/*!
+ This is the default instantion method. Incudes regular and selfie flash, video recording, camera swapping, tap to focus, and doubletap to switch cameras.
+ */
++ (instancetype) withDefaultInterface;
 
 /*!
  Use these methods to register or remove the camera view controller for a color change notificaiton (all the button colors will change on the camera screen when this notification fires).

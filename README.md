@@ -31,7 +31,7 @@ pod "TFCamera"
 
 Getting started with TFCamera is obscenely easy! Simply instantiate the camera ViewController and set its delegate with the following code and then present it wherever you'd like to use it (works great as a view in a UIPageViewController):
 ```
-TFCameraViewController *cameraVC = [[TFCameraViewController alloc] initWithInterface];
+TFCameraViewController *cameraVC = [TFCameraViewController withDefaultInterface];
 cameraVC.delegate = self;
 ```
 
