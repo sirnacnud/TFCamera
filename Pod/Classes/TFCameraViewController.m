@@ -74,6 +74,7 @@
     if (self) {
         self.enableSelfieFlash = YES;
         self.enableDoubleTapSwitch = YES;
+        self.enableShutterAnimation = YES;
     }
     
     return self;
@@ -550,20 +551,22 @@
 
 - (void) triggerShutterAnimation
 {
-    // Create a empty view with the color black.
-    UIView *flashView = [[UIView alloc] initWithFrame:self.view.bounds];
-    flashView.backgroundColor = [UIColor blackColor];
-    flashView.alpha = 1.0;
-    
-    // Add the flash view
-    [self.view addSubview:flashView];
-    
-    // Fade it out and remove after animation.
-    [UIView animateWithDuration:self.shutterAnimationSpeed animations:^{
-        flashView.alpha = 0.0;
-    } completion:^(BOOL finished) {
-        [flashView removeFromSuperview];
-    }];
+    if (self.enableShutterAnimation) {
+        // Create a empty view with the color black.
+        UIView *flashView = [[UIView alloc] initWithFrame:self.view.bounds];
+        flashView.backgroundColor = [UIColor blackColor];
+        flashView.alpha = 1.0;
+        
+        // Add the flash view
+        [self.view addSubview:flashView];
+        
+        // Fade it out and remove after animation.
+        [UIView animateWithDuration:self.shutterAnimationSpeed animations:^{
+            flashView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [flashView removeFromSuperview];
+        }];
+    }
 }
 
 - (void) toggleVideoRecording {

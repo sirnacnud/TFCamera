@@ -53,6 +53,7 @@ TFCamera has the following properties you can set to customize the camera functi
 ```
 @property (nonatomic) BOOL enableDoubleTapSwitch; //Default is YES
 @property (nonatomic) BOOL enableSelfieFlash; //Default is YES
+@property (nonatomic) BOOL enableShutterAnimation; //Default is YES
 
 @property (nonatomic) CGFloat maxVideoLength; //Default is 16 seconds
 @property (nonatomic) CGFloat shutterAnimationSpeed; //Default is .15 seconds 
