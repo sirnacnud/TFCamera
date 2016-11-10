@@ -64,7 +64,19 @@
 #pragma mark - Initializers
 - (instancetype) initWithInterface
 {
-    return [super initWithNibName:@"CameraOverlay" bundle:[TFCameraViewController podBundle]];
+    return [self initWithNibName:@"CameraOverlay" bundle:[TFCameraViewController podBundle]];
+}
+
+- (instancetype) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    if (self) {
+        self.enableSelfieFlash = YES;
+        self.enableDoubleTapSwitch = YES;
+    }
+    
+    return self;
 }
 
 + (instancetype) withDefaultInterface
@@ -148,8 +160,6 @@
 - (void) standardSetup
 {
     self.selfieMode = NO;
-    self.enableSelfieFlash = YES;
-    self.enableDoubleTapSwitch = YES;
     
     if (!self.appColor) self.appColor = [UIColor whiteColor];
     if (!self.maxVideoLength) self.maxVideoLength = 16;
