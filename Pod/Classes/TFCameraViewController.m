@@ -540,16 +540,13 @@
 
 - (void) triggerShutterAnimation
 {
-    //get the application window
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    
     // Create a empty view with the color black.
-    UIView *flashView = [[UIView alloc] initWithFrame:window.bounds];
+    UIView *flashView = [[UIView alloc] initWithFrame:self.view.bounds];
     flashView.backgroundColor = [UIColor blackColor];
     flashView.alpha = 1.0;
     
-    // Add the flash view to the window
-    [window addSubview:flashView];
+    // Add the flash view
+    [self.view addSubview:flashView];
     
     // Fade it out and remove after animation.
     [UIView animateWithDuration:self.shutterAnimationSpeed animations:^{
@@ -602,19 +599,16 @@
 
 - (void) triggerSelfieFlash
 {
-    //get the application window
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    
     //Adjust screen brightness
     CGFloat currentScreenBrightness = [UIScreen mainScreen].brightness;
     [[UIScreen mainScreen] setBrightness:1.0];
     // Create a empty view with the color white.
-    UIView *flashView = [[UIView alloc] initWithFrame:window.bounds];
+    UIView *flashView = [[UIView alloc] initWithFrame:self.view.bounds];
     flashView.backgroundColor = [UIColor whiteColor];
     flashView.alpha = 1.0;
     
-    // Add the flash view to the window
-    [window addSubview:flashView];
+    // Add the flash view
+    [self.view addSubview:flashView];
     
     // Fade it out and remove after animation.
     [UIView animateWithDuration:0.05 animations:^{
