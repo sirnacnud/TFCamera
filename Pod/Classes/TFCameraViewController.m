@@ -123,8 +123,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+#if !defined(TF_APP_EXTENSIONS)
     if ([UIApplication sharedApplication].statusBarHidden == NO)
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+#endif
     
     [self.navigationController.navigationBar setHidden:YES];
     [self.navigationController.navigationBar setTranslucent:YES];
@@ -133,7 +135,9 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
+#if !defined(TF_APP_EXTENSIONS)
     if ([UIApplication sharedApplication].statusBarHidden == YES) [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+#endif
     [self.navigationController.navigationBar setHidden:NO];
     [self.navigationController.navigationBar setTranslucent:NO];
 }
@@ -184,7 +188,9 @@
 
 - (void) setupView
 {
+#if !defined(TF_APP_EXTENSIONS)
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+#endif
     self.isVideoCamera = NO;
     self.capturedImage = nil;
     
@@ -250,7 +256,8 @@
     if (input) {
         [self.captureSession addInput:input];
     } else {
-        [[[UIAlertView alloc] initWithTitle:@"No Video!" message:@"It looks like we don't have access to your camera. Please enable it in your device's settings to record video or take photos." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [self showAlertWithTitle:NSLocalizedString(@"No Video!", nil)
+                     withMessage:NSLocalizedString(@"It looks like we don't have access to your camera. Please enable it in your device's settings to record video or take photos.", nil)];
         self.shutterButton.backgroundColor = [UIColor whiteColor];
         return;
     }
@@ -261,7 +268,8 @@
     if (audioInput) {
         [self.captureSession addInput:audioInput];
     } else {
-        [[[UIAlertView alloc] initWithTitle:@"No Sound!" message:@"It looks like we don't have access to your microphone. Please enable it in your device's settings to record video." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [self showAlertWithTitle:NSLocalizedString(@"No Sound!", nil)
+                     withMessage:NSLocalizedString(@"It looks like we don't have access to your microphone. Please enable it in your device's settings to record video.", nil)];
         self.shutterButton.backgroundColor = [UIColor whiteColor];
         return;
     }
@@ -287,6 +295,19 @@
     [self.captureSession addOutput:self.movieOutput];
     
     [self.captureSession startRunning];
+}
+
+- (void)showAlertWithTitle:(NSString *)title withMessage:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alertController addAction:okAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - Camera Methods

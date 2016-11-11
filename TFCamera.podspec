@@ -39,4 +39,14 @@ Pod::Spec.new do |s|
   s.frameworks = 'UIKit', 'AVFoundation', 'AssetsLibrary', 'CoreTelephony'
   s.dependency 'pop', '~> 1.0'
   s.dependency 'JWGCircleCounter', '~> 0.2'
+  s.default_subspec = 'Core'
+
+  s.subspec 'Core' do |c|
+    c.source_files = 'Pod/Classes/**/*'
+  end
+
+  s.subspec 'AppExtension' do |ap|
+    ap.source_files = 'Pod/Classes/**/*'
+    ap.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) TF_APP_EXTENSIONS' }
+  end
 end
