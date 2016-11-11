@@ -30,11 +30,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.4'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'TFCamera' => ['Pod/Assets/*']
-  }
-
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'AVFoundation', 'AssetsLibrary', 'CoreTelephony'
   s.dependency 'pop', '~> 1.0'
@@ -43,10 +38,16 @@ Pod::Spec.new do |s|
 
   s.subspec 'Core' do |c|
     c.source_files = 'Pod/Classes/**/*'
+    c.resource_bundles = {
+      'TFCamera' => ['Pod/Assets/*']
+    }
   end
 
   s.subspec 'AppExtension' do |ap|
     ap.source_files = 'Pod/Classes/**/*'
+    ap.resource_bundles = {
+      'TFCamera' => ['Pod/Assets/*']
+    }
     ap.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) TF_APP_EXTENSIONS' }
   end
 end
